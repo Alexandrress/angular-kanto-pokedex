@@ -1,0 +1,36 @@
+<mat-card>
+    <mat-grid-list *ngIf="pokemon" cols="3" rowHeight="100px">
+        <mat-grid-tile [colspan]=1 [rowspan]=2>
+            <div>
+                <p>
+                    <img class="fit-picture" src="assets\img\official-artwork\{{ pokemon.id }}.png" alt="pokemon_image_{{ pokemon.id }}">
+                </p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]=1 [rowspan]=2>
+            <div>
+                <p> {{ pokemon.name }} - No. {{ pokemon.id | number : '3.0' }}
+                    <button mat-icon-button (click)="playSound()">
+                        <mat-icon>play_circle_outline</mat-icon>
+                    </button>
+                </p>
+                <p> 
+                    <mat-chip-list aria-label="Type display">
+                        <mat-chip *ngFor="let type of pokemon.types">{{ type }}</mat-chip>
+                    </mat-chip-list> 
+                </p>
+                <p> Taille : {{ pokemon.height | number : '1.1-1' }} m</p>
+                <p> Poids : {{ pokemon.weight | number : '1.1-1' }} kg</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]=2 [rowspan]=1>
+            <p> {{ pokemon.description }}</p>
+        </mat-grid-tile>
+        <audio controls autoplay hidden>
+            <source src="assets\audio\{{ pokemon.id }}.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </mat-grid-list>
+</mat-card>
+<br/>
+<button mat-button (click)="goBack()">Go back</button>
