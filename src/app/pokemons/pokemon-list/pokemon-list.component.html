@@ -1,8 +1,11 @@
+
+<input type="tel" matInput placeholder="Name..." name= "search" [(ngModel)]= "search">
+<button matSuffix mat-button (click)="searchPokemon()"><mat-icon >search</mat-icon></button>
 <mat-nav-list infiniteScroll (scrolled)="onScroll()">
     <mat-list-item *ngFor="let pokemon of pokemons">
       <img matListAvatar src="assets\img\sprites\{{ pokemon.id }}.png" alt="pokemon_sprite_{{ pokemon.id }}">
       <p matLine>
-        <a routerLink="/detail/{{pokemon.id}}">
+        <a routerLink="/pokedex/{{pokemon.id}}">
             <span> {{pokemon.id}}. {{pokemon.name}} </span>
         </a>
       </p>
