@@ -22,9 +22,11 @@ export class PokemonDetailComponent implements OnInit {
   ngOnInit(): void {
     if(this.actRoute.snapshot.paramMap.get('id') && Number(this.actRoute.snapshot.paramMap.get('id')) > 0 && Number(this.actRoute.snapshot.paramMap.get('id')) < 152)
       this.pokemonService.getPokemonById(Number(this.actRoute.snapshot.paramMap.get('id'))).subscribe(data => {this.pokemon = data; this.playSound();});
-    this.router.events.subscribe((event: Event) => {if (event instanceof NavigationEnd) {
-      if(Number(event.url.replace(/\D/g,'')) > 0 && Number(event.url.replace(/\D/g,'')) < 152)
-        this.pokemonService.getPokemonById(Number(event.url.replace(/\D/g,''))).subscribe(data => {this.pokemon = data; this.playSound();});
+    
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        if(Number(event.url.replace(/\D/g,'')) > 0 && Number(event.url.replace(/\D/g,'')) < 152)
+          this.pokemonService.getPokemonById(Number(event.url.replace(/\D/g,''))).subscribe(data => {this.pokemon = data; this.playSound();});
     }})
   }
 

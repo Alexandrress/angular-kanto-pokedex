@@ -1,4 +1,9 @@
 <mat-sidenav-container autosize class="container">
-    <mat-sidenav mode="side" opened><app-pokemon-list></app-pokemon-list></mat-sidenav>
+    <mat-sidenav mode="side" opened>
+        <mat-tab-group>
+            <mat-tab label="List"> <app-pokemon-list></app-pokemon-list> </mat-tab>
+            <mat-tab label="Team builder"> <app-pokemon-team></app-pokemon-team> </mat-tab>
+          </mat-tab-group>
+    </mat-sidenav>
     <mat-sidenav-content><app-pokemon-detail></app-pokemon-detail></mat-sidenav-content>
 </mat-sidenav-container>
