@@ -71,7 +71,7 @@ export class PokemonDetailComponent implements OnInit {
 
   playSound(son: String){
     let audio = new Audio();
-    audio.src = "../../../assets/audio/" + son + ".mp3";
+    audio.src = "~/assets/audio/" + son + ".mp3";
     audio.load();
     var resp = audio.play();
 
