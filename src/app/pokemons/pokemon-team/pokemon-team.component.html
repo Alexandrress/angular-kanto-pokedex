@@ -1,1 +1,9 @@
-<p>pokemon-team works!</p>
+<mat-nav-list class="pokedex-list">
+    <mat-list-item routerLink="/pokedex/{{pokemon.id}}" *ngFor="let pokemon of pokemons">
+        <img matListAvatar src="assets\img\sprites\{{ pokemon.id }}.png" alt="pokemon_sprite_{{ pokemon.id }}">
+        <img matListAvatar src="assets\img\pokeball.png" alt="pokeball">
+        <p matLine>
+            <span> {{pokemon.id}}. {{pokemon.name}} </span>
+        </p>
+    </mat-list-item>
+</mat-nav-list>

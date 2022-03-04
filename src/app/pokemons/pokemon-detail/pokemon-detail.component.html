@@ -10,7 +10,7 @@
         <mat-grid-tile [colspan]=1 [rowspan]=2>
             <div>
                 <p> {{ pokemon.name }} - No. {{ pokemon.id | number : '3.0' }}
-                    <button mat-icon-button (click)="playSound()">
+                    <button mat-icon-button (click)="playPokemonSound()">
                         <mat-icon>play_circle_outline</mat-icon>
                     </button>
                 </p>
@@ -27,4 +27,6 @@
             <p> {{ pokemon.description }}</p>
         </mat-grid-tile>
     </mat-grid-list>
+    <button *ngIf="!isInTeam" mat-raised-button color="primary" (click)="addPokemonToTeam()" [disabled]="!canAdd">Catch</button>&nbsp;&nbsp;<img *ngIf="canAdd && !isInTeam" class="fit-picture-catch" src="assets\img\catch.png" alt="catch_image">
+    <button *ngIf="isInTeam" mat-raised-button color="warn" (click)="removePokemonFromTeam()">Release</button>&nbsp;&nbsp;<img *ngIf="isInTeam" class="fit-picture-release" src="assets\img\release.png" alt="release_image">
 </mat-card>

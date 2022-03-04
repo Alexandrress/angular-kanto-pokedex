@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
@@ -10,6 +10,10 @@ import { AuthService } from './auth.service';
 export class TrainerService {
 
   private apiUrl;
+
+  teamIds: number[] = [];
+  private teamChange = new Subject<string>();
+  teamChange$ = this.teamChange.asObservable();
 
   constructor(private http: HttpClient) {
     this.apiUrl = `${environment.api}trainers`;
@@ -40,6 +44,28 @@ export class TrainerService {
       tap(_ => this.log(`create`)),
       catchError(this.handleError<any>('create error'))
     );
+  }
+
+  addPokemonToTeam(id: number){
+    if(this.teamIds.length < 6)
+    {
+      this.teamIds.push(id);
+      this.setTeam(this.teamIds).subscribe(data => this.teamChangeAnnouncement("add"));
+    }
+  }
+
+  removePokemonFromTeam(id: number){
+    this.teamIds.forEach((element,index)=>{
+      if(element==id) 
+      {
+        this.teamIds.splice(index, 1);
+        this.setTeam(this.teamIds).subscribe(data => this.teamChangeAnnouncement("remove"));
+      }
+    });
+  }
+
+  teamChangeAnnouncement(change: string) {
+    this.teamChange.next(change);
   }
 
   private log(message: string): void {
