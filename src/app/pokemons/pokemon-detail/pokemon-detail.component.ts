@@ -49,7 +49,7 @@ export class PokemonDetailComponent implements OnInit {
           }
           else
             this.isInTeam = false;
-          this.playPokemonSound();
+          this.playSound(this.pokemon.id?.toString() || "");
         });
       
       this.router.events.subscribe((event: Event) => {
@@ -63,28 +63,25 @@ export class PokemonDetailComponent implements OnInit {
               }
               else
                 this.isInTeam = false;
-              this.playPokemonSound();});
+                this.playSound(this.pokemon.id?.toString() || "");});
       }})
       }); 
     });
-  }
-
-  playPokemonSound(){
-    let audio = new Audio();
-    audio.src = "../../../assets/audio/" + this.pokemon?.id + ".mp3";
-    audio.load();
-    audio.muted = true; // Interacting with the audio once
-    audio.muted = false;
-    audio.play();
   }
 
   playSound(son: String){
     let audio = new Audio();
     audio.src = "../../../assets/audio/" + son + ".mp3";
     audio.load();
-    audio.muted = true; // Interacting with the audio once
-    audio.muted = false;
-    audio.play();
+    var resp = audio.play();
+
+    if (resp!== undefined) { //Allows to not log the error
+      resp.then(_ => {
+          // autoplay starts!
+      }).catch(error => {
+         //show error
+      });
+    }
   }
 
   addPokemonToTeam(){
@@ -106,8 +103,17 @@ export class PokemonDetailComponent implements OnInit {
   removePokemonFromTeam(){
     if(this.pokemon)
     {
+      let count = 0;
       this.trainerService.removePokemonFromTeam(this.pokemon.id || -1)
-      this.isInTeam = false;
+
+      for (var i = 0; i < this.trainerService.teamIds.length; i++) 
+      {
+        if(this.trainerService.teamIds[i] == this.pokemon.id)
+          count++;
+      }
+      if(count == 0)
+        this.isInTeam = false;
+
       this.canAdd = true;
       this.playSound("release");
     }

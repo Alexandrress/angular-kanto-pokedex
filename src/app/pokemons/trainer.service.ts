@@ -55,11 +55,13 @@ export class TrainerService {
   }
 
   removePokemonFromTeam(id: number){
+    var hasDeleted: boolean = false;
     this.teamIds.forEach((element,index)=>{
-      if(element==id) 
+      if(element==id && !hasDeleted) 
       {
+        hasDeleted = true;
         this.teamIds.splice(index, 1);
-        this.setTeam(this.teamIds).subscribe(data => this.teamChangeAnnouncement("remove"));
+        this.setTeam(this.teamIds).subscribe(data => { this.teamChangeAnnouncement("remove")});
       }
     });
   }
